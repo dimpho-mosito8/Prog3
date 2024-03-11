@@ -1,0 +1,24 @@
+from flask import Flask
+import pandas as pd
+
+df = pd.read_csv("pdata.csv")
+
+print(df)
+#creating a library
+people = { "firstname": ["joe", "Itumeleng", "Karabo"],
+       "Lastname": ["Doe", "Mokoena", "Meropa"],
+       "email": ["jope@gmail.com", "itu@gmail.com", "kb@gmail.com"]
+       
+       
+       }
+
+a = pd.DataFrame(people)
+b = a[["firstname", "Lastname"]]
+
+print(b)
+
+
+c = pd.DataFrame(df)
+d = c[["Pulse", "Calories"]]
+
+print(d)
