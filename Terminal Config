@@ -1,0 +1,6 @@
+py -m pip install virtualenv
+py -m install virtualenv env
+env/Scripts/activate.ps1
+pip -m install flask
+pip -m install pandas
+pip -m install matplot
