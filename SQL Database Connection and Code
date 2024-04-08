@@ -1,0 +1,35 @@
+Terminal Connection:
+
+Normal env setup
+
+py -m pip install mysql-connector
+py -m pip install mysql-connector-python
+
+
+
+In PY File
+
+import mysql.connector
+
+db = mysql.connector.connect(
+    host = "127.0.0.1",
+    user = "root",
+    passwd = "Xylobear0903",
+    database = "VUT"
+)
+
+mycursor = db.cursor()
+
+mycursor.execute("CREATE DATABASE VUT")
+
+mycursor.execute("CREATE TABLE Person(name VARCHAR(50), age smallint unsigned, personID int PRIMARY KEY AUTO_INCREMENT")
+
+mycursor.execute("DESCRIBE Person")
+
+mycursor.execute("INSERT INTO Person(name,age) VALUES (%s,%s)", ("BLESSING", "25"))
+
+mycursor.execute("SELECT * FROM Person")
+
+
+for x in mycursor:
+    print(x)
