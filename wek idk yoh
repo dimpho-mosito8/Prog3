@@ -1,0 +1,132 @@
+from flask import Flask, render_template, redirect, request
+import sqlite3
+import os
+
+current = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template("index.html")
+
+@app.route('/search')
+def search():
+    return render_template("search.html")
+
+
+@app.route('/', methods = ["POST", "GET"])
+def home1():
+    name = request.form["FNAME"]
+    num = (int)(request.form["Pno"])
+    connection = sqlite3.connect(current + "\phoneserver.db") 
+    curs = connection.cursor()
+    curs.execute("INSERT INTO user(userName, userNum) values (?,?)", (name, num))
+    connection.commit()
+    return render_template("index.html")
+
+@app.route('/search', methods = ["POST", "GET"] )
+def search1():
+    srch = request.form["search"]
+    connection = sqlite3.connect(current + "\phoneserver.db") 
+    curs = connection.cursor()
+    dis = curs.execute("SELECT userNum FROM user WHERE userName = (?)", (srch))
+
+
+    return render_template("search.html", a = dis)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>LOGIN PAGE</h1>
+
+    <form action="#" method = "POST">
+
+    <input type="text" placeholder="ENTER YOUR NAME" name = "FNAME">
+    <input type="number" placeholder="ENTER YOUR PHONE NUMBER" name="Pno">
+    <button type="submit" > SUBMIT </button>
+
+    </form>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>LOGIN PAGE</h1>
+
+    <form action="#" method = "POST">
+
+    <input type="text" placeholder="Search" name = "search">
+    <button type="submit" > SUBMIT </button>
+
+    </form>
+    {{a}}
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>LOGIN PAGE</h1>
+
+    <form action="#" method = "POST">
+
+    <input type="text" placeholder="ENTER YOUR NAME" name = "FNAME">
+    <input type="number" placeholder="ENTER YOUR PHONE NUMBER" name="Pno">
+    <button type="submit" > LOGIN </button>
+
+    </form>
+
+    {{a}}
+    
+</body>
+</html>
